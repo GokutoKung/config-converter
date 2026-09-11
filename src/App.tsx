@@ -69,7 +69,11 @@ export default function App() {
     <div className="app">
       <header className="app-header">
         <div className="brand">
-          <img className="brand-logo" src="/favicon.svg" alt="" />
+          <img
+            className="brand-logo"
+            src={`${import.meta.env.BASE_URL}favicon.svg`}
+            alt=""
+          />
           <div>
             <h1>Config Converter</h1>
             <p>

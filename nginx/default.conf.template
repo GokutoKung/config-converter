@@ -1,0 +1,27 @@
+# Rendered at container start: the base nginx image runs `envsubst` over every
+# *.template in /etc/nginx/templates, so ${PORT} below comes from the env var.
+server {
+    listen       ${PORT};
+    listen       [::]:${PORT};
+    server_name  _;
+
+    root   /usr/share/nginx/html;
+    index  index.html;
+
+    # Content-hashed build assets — cache aggressively.
+    location /assets/ {
+        expires    1y;
+        add_header Cache-Control "public, immutable";
+        try_files  $uri =404;
+    }
+
+    # Single-page app: always fall back to index.html.
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    gzip              on;
+    gzip_vary         on;
+    gzip_min_length   1024;
+    gzip_types        text/plain text/css application/javascript application/json image/svg+xml;
+}

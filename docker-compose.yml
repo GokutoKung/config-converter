@@ -1,0 +1,14 @@
+services:
+  config-converter:
+    build: .
+    image: config-converter:latest
+    container_name: config-converter
+    ports:
+      # Host port is configurable: HOST_PORT=3000 docker compose up
+      - '${HOST_PORT:-8080}:8080'
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD', 'wget', '-qO-', 'http://localhost:8080/']
+      interval: 30s
+      timeout: 3s
+      retries: 3

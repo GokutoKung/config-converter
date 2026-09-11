@@ -1,0 +1,3 @@
+# Copy to config/config.yaml (git-ignored). Port: PORT env > this > 5173.
+server:
+  port: 5173

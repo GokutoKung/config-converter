@@ -21,9 +21,10 @@ function resolvePort(): number {
 
 const port = resolvePort();
 
-export default defineConfig(({ command, isPreview }) => ({
-  // GitHub Pages serves this repo at /config-converter/; keep dev at /.
-  base: command === 'build' || isPreview ? '/config-converter/' : '/',
+export default defineConfig(({ command }) => ({
+  // Relative base so one build works both at a subpath (GitHub Pages
+  // /config-converter/) and at root (nginx/Docker). Dev stays at /.
+  base: command === 'build' ? './' : '/',
   plugins: [react()],
   server: {
     port,

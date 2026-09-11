@@ -21,7 +21,9 @@ function resolvePort(): number {
 
 const port = resolvePort();
 
-export default defineConfig({
+export default defineConfig(({ command, isPreview }) => ({
+  // GitHub Pages serves this repo at /config-converter/; keep dev at /.
+  base: command === 'build' || isPreview ? '/config-converter/' : '/',
   plugins: [react()],
   server: {
     port,
@@ -45,4 +47,4 @@ export default defineConfig({
       exclude: ['src/lib/**/*.{test,spec}.ts', 'src/lib/index.ts'],
     },
   },
-});
+}));
